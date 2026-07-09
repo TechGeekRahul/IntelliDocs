@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     debug: bool = True
     host: str = "0.0.0.0"
     port: int = 8000
+    upload_dir: str = "uploads"
     cors_origins: list[str] = [
         "http://localhost:3000",
         "http://localhost:5173",

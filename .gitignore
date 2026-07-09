@@ -26,6 +26,7 @@ htmlcov/
 
 # ChromaDB / vector store (future)
 chroma_data/
+uploads/
 
 # Node (future frontend)
 node_modules/

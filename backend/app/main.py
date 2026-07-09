@@ -1,16 +1,20 @@
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.router import api_router
 from app.config import get_settings
+from app.services.documents import DocumentStore
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     settings = get_settings()
+    Path(settings.upload_dir).mkdir(parents=True, exist_ok=True)
     app.state.settings = settings
+    app.state.document_store = DocumentStore()
     yield
 
 
