@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     host: str = "0.0.0.0"
     port: int = 8000
     upload_dir: str = "uploads"
+    chroma_dir: str = "chroma_data"
     cors_origins: list[str] = [
         "http://localhost:3000",
         "http://localhost:5173",

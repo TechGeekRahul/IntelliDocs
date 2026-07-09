@@ -21,11 +21,18 @@ async def upload_document(request: Request, file: UploadFile) -> DocumentUploadR
     store = request.app.state.document_store
     record = store.add(file.filename, chunks)
 
+    vector_store = request.app.state.vector_store
+    vector_store.index_document(
+        document_id=record["document_id"],
+        filename=record["filename"],
+        chunks=chunks,
+    )
+
     return DocumentUploadResponse(
         document_id=record["document_id"],
         filename=record["filename"],
         chunk_count=record["chunk_count"],
-        message="Document uploaded and chunked successfully",
+        message="Document uploaded, chunked, and indexed",
     )
 
 
