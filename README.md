@@ -65,4 +65,5 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 | POST   | `/documents` | Upload a document (PDF, DOCX, MD) |
 | GET    | `/documents` | List uploaded documents |
 | POST   | `/search` | Semantic search over indexed chunks |
+| POST   | `/chat` | Ask a question and get an answer with citations |
 
