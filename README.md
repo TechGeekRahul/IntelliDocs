@@ -13,7 +13,7 @@ User → Ask Question → Embedding → Vector Search → Top 5 Chunks → Promp
 | Layer    | Tools                                      |
 | -------- | ------------------------------------------ |
 | Backend  | Python, FastAPI, LangChain, OpenAI/Gemini, ChromaDB or FAISS |
-| Frontend | React (not yet scaffolded)                 |
+| Frontend | React (Vite)                 |
 
 ## Project structure
 
@@ -21,12 +21,14 @@ User → Ask Question → Embedding → Vector Search → Top 5 Chunks → Promp
 IntelliDocs/
 ├── backend/
 │   ├── app/
-│   │   ├── main.py          # FastAPI application
-│   │   ├── config.py        # Settings from environment
-│   │   └── api/
-│   │       └── routes/      # Route modules
+│   │   ├── main.py
+│   │   ├── config.py
+│   │   └── api/routes/
 │   ├── requirements.txt
 │   └── .env.example
+├── frontend/
+│   ├── src/
+│   └── package.json
 └── README.md
 ```
 
@@ -66,4 +68,16 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 | GET    | `/documents` | List uploaded documents |
 | POST   | `/search` | Semantic search over indexed chunks |
 | POST   | `/chat` | Ask a question and get an answer with citations |
+
+## Frontend setup
+
+```bash
+cd frontend
+npm install
+copy .env.example .env   # Windows
+# cp .env.example .env   # macOS / Linux
+npm run dev
+```
+
+Open http://localhost:5173 (API should be running on port 8000).
 
