@@ -15,8 +15,11 @@ async def lifespan(app: FastAPI):
     settings = get_settings()
     Path(settings.upload_dir).mkdir(parents=True, exist_ok=True)
     Path(settings.chroma_dir).mkdir(parents=True, exist_ok=True)
+    Path(settings.data_dir).mkdir(parents=True, exist_ok=True)
     app.state.settings = settings
-    app.state.document_store = DocumentStore()
+    app.state.document_store = DocumentStore(
+        Path(settings.data_dir) / "documents.json"
+    )
     app.state.vector_store = VectorStore(settings.chroma_dir)
     yield
 

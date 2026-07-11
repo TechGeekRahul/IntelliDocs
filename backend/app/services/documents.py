@@ -1,3 +1,4 @@
+import json
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
@@ -74,19 +75,45 @@ def chunk_text(text: str, chunk_size: int = 800, overlap: int = 100) -> list[str
 
 
 class DocumentStore:
-    def __init__(self) -> None:
-        self._documents: dict[str, dict] = {}
+    def __init__(self, store_path: Path) -> None:
+        self._store_path = store_path
+        self._documents: dict[str, dict] = self._load()
 
-    def add(self, filename: str, chunks: list[str]) -> dict:
+    def _load(self) -> dict[str, dict]:
+        if not self._store_path.exists():
+            return {}
+
+        data = json.loads(self._store_path.read_text(encoding="utf-8"))
+        return {doc["document_id"]: doc for doc in data}
+
+    def _save(self) -> None:
+        self._store_path.parent.mkdir(parents=True, exist_ok=True)
+        payload = list(self._documents.values())
+        self._store_path.write_text(
+            json.dumps(payload, indent=2),
+            encoding="utf-8",
+        )
+
+    def add(self, filename: str, file_path: str, chunk_count: int) -> dict:
         document_id = uuid.uuid4().hex
         record = {
             "document_id": document_id,
             "filename": filename,
-            "chunks": chunks,
-            "chunk_count": len(chunks),
+            "file_path": file_path,
+            "chunk_count": chunk_count,
             "uploaded_at": datetime.now(timezone.utc).isoformat(),
         }
         self._documents[document_id] = record
+        self._save()
+        return record
+
+    def get(self, document_id: str) -> dict | None:
+        return self._documents.get(document_id)
+
+    def delete(self, document_id: str) -> dict | None:
+        record = self._documents.pop(document_id, None)
+        if record:
+            self._save()
         return record
 
     def list_all(self) -> list[dict]:

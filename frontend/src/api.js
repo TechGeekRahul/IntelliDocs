@@ -28,6 +28,10 @@ export function uploadDocument(file) {
   return request("/documents", { method: "POST", body: form });
 }
 
+export function deleteDocument(documentId) {
+  return request(`/documents/${documentId}`, { method: "DELETE" });
+}
+
 export function askQuestion(question, documentId, topK = 5) {
   return request("/chat", {
     method: "POST",

@@ -17,9 +17,12 @@ function App() {
       <main>
         <aside>
           <DocumentUpload onUploaded={() => setRefreshKey((key) => key + 1)} />
-          <DocumentList refreshKey={refreshKey} />
+          <DocumentList
+            refreshKey={refreshKey}
+            onChanged={() => setRefreshKey((key) => key + 1)}
+          />
         </aside>
-        <ChatPanel />
+        <ChatPanel refreshKey={refreshKey} />
       </main>
     </div>
   );

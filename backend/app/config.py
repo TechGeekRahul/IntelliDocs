@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     port: int = 8000
     upload_dir: str = "uploads"
     chroma_dir: str = "chroma_data"
+    data_dir: str = "data"
     openai_api_key: str | None = None
     openai_model: str = "gpt-4o-mini"
     cors_origins: list[str] = [

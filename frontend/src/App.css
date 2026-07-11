@@ -108,10 +108,27 @@ button:disabled {
 .doc-list li {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 0.5rem;
   padding: 0.5rem 0;
   border-bottom: 1px solid #eee;
   font-size: 0.9rem;
+}
+
+.doc-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.btn-delete {
+  background: #fff;
+  color: #b91c1c;
+  border: 1px solid #fca5a5;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  flex-shrink: 0;
 }
 
 .doc-list li:last-child {

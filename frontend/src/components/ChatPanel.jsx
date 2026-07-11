@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { askQuestion, listDocuments } from "../api";
 
-export default function ChatPanel() {
+export default function ChatPanel({ refreshKey }) {
   const [documents, setDocuments] = useState([]);
   const [documentId, setDocumentId] = useState("");
   const [question, setQuestion] = useState("");
@@ -11,8 +11,17 @@ export default function ChatPanel() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    listDocuments().then(setDocuments).catch(() => {});
-  }, []);
+    listDocuments()
+      .then((docs) => {
+        setDocuments(docs);
+        setDocumentId((current) =>
+          current && !docs.some((doc) => doc.document_id === current)
+            ? ""
+            : current,
+        );
+      })
+      .catch(() => {});
+  }, [refreshKey]);
 
   async function handleSubmit(event) {
     event.preventDefault();

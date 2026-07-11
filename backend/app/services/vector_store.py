@@ -25,6 +25,9 @@ class VectorStore:
         ]
         self._collection.add(ids=ids, documents=chunks, metadatas=metadatas)
 
+    def delete_document(self, document_id: str) -> None:
+        self._collection.delete(where={"document_id": document_id})
+
     def search(
         self,
         query: str,

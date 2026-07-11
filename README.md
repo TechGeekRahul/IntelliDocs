@@ -66,6 +66,7 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 | GET    | `/docs`   | Swagger UI        |
 | POST   | `/documents` | Upload a document (PDF, DOCX, MD) |
 | GET    | `/documents` | List uploaded documents |
+| DELETE | `/documents/{id}` | Delete a document and its indexed chunks |
 | POST   | `/search` | Semantic search over indexed chunks |
 | POST   | `/chat` | Ask a question and get an answer with citations |
 
