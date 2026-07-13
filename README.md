@@ -29,6 +29,7 @@ IntelliDocs/
 ├── frontend/
 │   ├── src/
 │   └── package.json
+├── docker-compose.yml
 └── README.md
 ```
 
@@ -84,4 +85,22 @@ npm run dev
 Open http://localhost:5173 (API should be running on port 8000).
 
 Use **Chat** for LLM answers with citations, or **Search** to browse matching chunks directly.
+
+## Docker
+
+Run the full stack with Docker Compose:
+
+```bash
+copy backend\.env.example backend\.env   # Windows
+# cp backend/.env.example backend/.env   # macOS / Linux
+# Add your OPENAI_API_KEY to backend/.env
+
+docker compose up --build
+```
+
+- Frontend: http://localhost:5173
+- Backend: http://localhost:8000
+- API docs: http://localhost:8000/docs
+
+Data (uploads, Chroma index, document metadata) is stored in Docker volumes and persists across restarts.
 
