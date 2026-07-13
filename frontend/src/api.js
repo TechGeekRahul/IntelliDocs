@@ -32,6 +32,18 @@ export function deleteDocument(documentId) {
   return request(`/documents/${documentId}`, { method: "DELETE" });
 }
 
+export function searchDocuments(query, documentId, topK = 5) {
+  return request("/search", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      query,
+      top_k: topK,
+      document_id: documentId || null,
+    }),
+  });
+}
+
 function parseSseChunk(chunk, onEvent) {
   for (const line of chunk.split("\n")) {
     if (!line.startsWith("data: ")) {

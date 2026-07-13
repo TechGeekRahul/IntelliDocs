@@ -83,3 +83,5 @@ npm run dev
 
 Open http://localhost:5173 (API should be running on port 8000).
 
+Use **Chat** for LLM answers with citations, or **Search** to browse matching chunks directly.
+
