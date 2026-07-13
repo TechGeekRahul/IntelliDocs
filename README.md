@@ -69,6 +69,7 @@ uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 | DELETE | `/documents/{id}` | Delete a document and its indexed chunks |
 | POST   | `/search` | Semantic search over indexed chunks |
 | POST   | `/chat` | Ask a question and get an answer with citations |
+| POST   | `/chat/stream` | Stream an answer with citations (SSE) |
 
 ## Frontend setup
 

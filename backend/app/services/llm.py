@@ -1,3 +1,5 @@
+from collections.abc import Iterator
+
 from openai import OpenAI
 
 SYSTEM_PROMPT = (
@@ -40,3 +42,26 @@ def generate_answer(
         raise ValueError("Empty response from LLM")
 
     return message.strip()
+
+
+def stream_answer(
+    api_key: str,
+    model: str,
+    question: str,
+    chunks: list[dict],
+) -> Iterator[str]:
+    client = OpenAI(api_key=api_key)
+    stream = client.chat.completions.create(
+        model=model,
+        messages=[
+            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "user", "content": build_user_prompt(question, chunks)},
+        ],
+        temperature=0.2,
+        stream=True,
+    )
+
+    for chunk in stream:
+        token = chunk.choices[0].delta.content
+        if token:
+            yield token

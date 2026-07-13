@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { askQuestion, listDocuments } from "../api";
+import { askQuestionStream, listDocuments } from "../api";
 
 export default function ChatPanel({ refreshKey }) {
   const [documents, setDocuments] = useState([]);
@@ -35,9 +35,16 @@ export default function ChatPanel({ refreshKey }) {
     setCitations([]);
 
     try {
-      const result = await askQuestion(question.trim(), documentId || null);
-      setAnswer(result.answer);
-      setCitations(result.citations);
+      let streamedAnswer = "";
+
+      await askQuestionStream(question.trim(), documentId || null, 5, {
+        onCitations: setCitations,
+        onToken: (token) => {
+          streamedAnswer += token;
+          setAnswer(streamedAnswer);
+        },
+        onError: (message) => setError(message),
+      });
     } catch (err) {
       setError(err.message);
     } finally {
